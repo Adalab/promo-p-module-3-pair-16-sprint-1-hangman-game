@@ -3,6 +3,17 @@ import { useState } from 'react';
 
 function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [lastLetter, setLastLetter] = useState('');
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+  const handleInput = (event) => {
+    const inputValue = event.currentTarget.value;
+    const regex = new RegExp('^[a-zA-Z\u00C0-\u00FF]*$');
+    if (regex.test(inputValue)) {
+      setLastLetter(inputValue);
+    }
+  };
   const handleButton = (event) => {
     event.preventDefault();
     setNumberOfErrors(numberOfErrors + 1);
@@ -39,7 +50,7 @@ function App() {
               <li className='letter'>x</li>
             </ul>
           </div>
-          <form className='form'>
+          <form className='form' onSubmit={handleSubmit}>
             <label className='title' htmlFor='last-letter'>
               Escribe una letra:
             </label>
@@ -50,6 +61,8 @@ function App() {
               type='text'
               name='last-letter'
               id='last-letter'
+              onChange={handleInput}
+              value={lastLetter}
             />
           </form>
         </section>
