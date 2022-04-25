@@ -1,11 +1,16 @@
 import '../styles/App.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import object from '../services/fetch';
 
 function App() {
   //const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
-  const [word, setWord] = useState('katakroker');
+  const [word, setWord] = useState('');
   const [userLetters, setUserLetters] = useState([]);
+  useEffect(() => {
+    object.getWordFromApi().then((data) => setWord(data));
+  }, []);
+  console.log(word);
 
   const renderErrorLetters = () => {
     const wordLetters = word.split('');
